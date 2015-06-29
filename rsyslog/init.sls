@@ -26,13 +26,13 @@ config_{{ rsyslog.config }}:
 {% set basename = filename.split('/')|last %}
 rsyslog_custom_{{basename}}:
   file.managed:
-    - name: {{ rsyslog.custom_config_path }}/{{ basename|replace(".jinja", "") }}
+    - name: {{ rsyslog.custom_config_path }}/{{ basename|replace(".j2", "") }}
     {% if basename != filename %}
     - source: {{ filename }}
     {% else %}
     - source: salt://rsyslog/files/{{ filename }}
     {% endif %}
-    {% if filename.endswith('.jinja') %}
+    {% if filename.endswith('.j2') %}
     - template: jinja
     {% endif %}
     - watch_in:
